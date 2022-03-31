@@ -49,6 +49,11 @@ public class RestWorkSpaceUserController {
 		List<WorkSpaceUserDto> result = workSpaceUserService.getAllByUserId(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/org/{userId}", method = RequestMethod.GET)
+	public ResponseEntity<List<WorkSpaceUserDto>> getWorkSpaceByUserId(@PathVariable("userId") Long id) {
+		List<WorkSpaceUserDto> result = workSpaceUserService.getWorkSpaceByUserId(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	@RequestMapping(value = "/{workspace-id}/{username}", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> inviteUser(@PathVariable("workspace-id") UUID workId,@PathVariable("username") String username) {
 		Boolean result = workSpaceUserService.inviteUser(workId, username);

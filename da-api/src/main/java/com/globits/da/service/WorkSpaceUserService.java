@@ -20,5 +20,5 @@ public interface WorkSpaceUserService  extends GenericService<WorkSpaceUser,UUID
 	List<WorkSpaceUserDto> getAllByUserId(Long id);
 	Boolean inviteUser(UUID workSpaceId,String username);
 	Boolean updateStatus(UUID id,Boolean status);// true : dong y, false: khong dong y
-	
+	List<WorkSpaceUserDto> getWorkSpaceByUserId(Long id);
 }

@@ -209,4 +209,15 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 		return false;
 	}
 
+	@Override
+	public List<WorkSpaceUserDto> getWorkSpaceByUserId(Long id) {
+		if(id!=null) {
+			List<WorkSpaceUserDto> result = workSpaceUserRepository.getWorkSpaceUserByUserId(id);
+			if(result!=null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
 }
