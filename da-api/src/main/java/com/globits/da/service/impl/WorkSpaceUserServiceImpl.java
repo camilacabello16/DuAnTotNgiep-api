@@ -109,8 +109,8 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 		
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
-		String sqlCount = "select count(entity.id) from  WorkSpaceUser as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.WorkSpaceUserDto(entity,true) from  WorkSpaceUser as entity where (1=1)  ";
+		String sqlCount = "select count(entity.id) from  WorkSpaceUser as entity JOIN FETCH WorkSpace w on w.id =entity.workSpace.id where (1=1)   ";
+		String sql = "select new com.globits.da.dto.WorkSpaceUserDto(entity,true) from  WorkSpaceUser as entity JOIN FETCH WorkSpace w on w.id =entity.workSpace.id   where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
@@ -123,6 +123,9 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 		}
 		if(dto.getStatus()!=null) {
 			whereClause += " AND ( entity.status = :status )";
+		}
+		if(dto.getParentId()!=null) {
+			whereClause += " AND ( w.parent.id = :parent )";
 		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
@@ -145,6 +148,10 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 		if (dto.getStatus() != null) {
 			q.setParameter("status", dto.getStatus());
 			qCount.setParameter("status",dto.getStatus());
+		}
+		if (dto.getParentId() != null) {
+			q.setParameter("parent", dto.getParentId());
+			qCount.setParameter("parent",dto.getParentId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);
