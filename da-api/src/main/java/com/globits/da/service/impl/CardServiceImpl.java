@@ -91,7 +91,9 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
 		}
-
+		if(dto.getWorkSpaceId()!=null) {
+			whereClause += " AND ( entity.workSpace.id =:id)";
+		}
 		
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
@@ -102,6 +104,10 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			q.setParameter("text", '%' + dto.getKeyword() + '%');
 			qCount.setParameter("text", '%' + dto.getKeyword() + '%');
+		}
+		if (dto.getWorkSpaceId() != null) {
+			q.setParameter("id", dto.getWorkSpaceId() );
+			qCount.setParameter("id", dto.getWorkSpaceId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);

@@ -93,7 +93,9 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
 		}
-
+		if(dto.getCardId()!=null) {
+			whereClause += " AND ( entity.card.id =:id)";
+		}
 		
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
@@ -104,6 +106,10 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			q.setParameter("text", '%' + dto.getKeyword() + '%');
 			qCount.setParameter("text", '%' + dto.getKeyword() + '%');
+		}
+		if (dto.getCardId() != null) {
+			q.setParameter("id", dto.getCardId() );
+			qCount.setParameter("id", dto.getCardId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);

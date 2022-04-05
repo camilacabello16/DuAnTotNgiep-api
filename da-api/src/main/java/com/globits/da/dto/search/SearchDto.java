@@ -9,18 +9,25 @@ public class SearchDto {
 	private int pageSize;
 	private String keyword;
 	private Boolean voided;
-	private UUID khoId;
+	private UUID cardId;
 	private String orderBy;
 	private String text;
-	private UUID productCategory;
+	private UUID workSpaceId;
 	private Date fromDate;
 	private Date toDate;
+
 	
-	public UUID getProductCategory() {
-		return productCategory;
+	public UUID getCardId() {
+		return cardId;
 	}
-	public void setProductCategory(UUID productCategory) {
-		this.productCategory = productCategory;
+	public void setCardId(UUID cardId) {
+		this.cardId = cardId;
+	}
+	public UUID getWorkSpaceId() {
+		return workSpaceId;
+	}
+	public void setWorkSpaceId(UUID workSpaceId) {
+		this.workSpaceId = workSpaceId;
 	}
 	public UUID getId() {
 		return id;
@@ -51,12 +58,6 @@ public class SearchDto {
 	}
 	public void setVoided(Boolean voided) {
 		this.voided = voided;
-	}
-	public UUID getKhoId() {
-		return khoId;
-	}
-	public void setKhoId(UUID khoId) {
-		this.khoId = khoId;
 	}
 	public String getOrderBy() {
 		return orderBy;
