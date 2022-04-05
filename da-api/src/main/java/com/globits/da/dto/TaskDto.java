@@ -18,6 +18,7 @@ public class TaskDto extends BaseObjectDto {
 	private Date endDate;
 	private Date startDate;
 	private CardDto card;
+	private Integer viewIndex;
 	private List<CommentDto> comments;
 	public TaskDto() {}
 	public TaskDto(Task entity) {
@@ -26,9 +27,14 @@ public class TaskDto extends BaseObjectDto {
 	public TaskDto(Task entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
 			this.name = entity.getName();
 			this.startDate = entity.getStartDate();
 			this.endDate = entity.getEndDate();
+			this.viewIndex = entity.getViewIndex();
 			if(entity.getCard()!=null&&entity.getCard().getId()!=null&&check) {
 				this.card = new CardDto(entity.getCard(),false);
 			}
@@ -41,6 +47,13 @@ public class TaskDto extends BaseObjectDto {
 		}
 	}
 	
+	
+	public Integer getViewIndex() {
+		return viewIndex;
+	}
+	public void setViewIndex(Integer viewIndex) {
+		this.viewIndex = viewIndex;
+	}
 	public List<CommentDto> getComments() {
 		return comments;
 	}

@@ -31,6 +31,11 @@ public class ReceiverNotificationDto extends BaseObjectDto {
 	public ReceiverNotificationDto() {}
 	
 	public ReceiverNotificationDto(ReceiverNotification entity) {
+		this.id = entity.getId();
+		this.createDate = entity.getCreateDate();
+		this.createdBy = entity.getCreatedBy();
+		this.modifyDate = entity.getModifyDate();
+		this.modifiedBy = entity.getModifiedBy();
 		if(entity.getUser()!=null &&entity.getUser().getId()!=null) {
 			UserDto userDto = new UserDto(entity.getUser());
 			this.userDto = userDto;

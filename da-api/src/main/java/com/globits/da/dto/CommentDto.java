@@ -20,6 +20,11 @@ public class CommentDto extends BaseObjectDto {
 	}
 	public CommentDto(Comment entity,boolean check) {
 		if(entity!=null) {
+			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
 			this.content = entity.getContent();
 			if(entity.getUser()!=null&&entity.getUser().getId()!=null&&check) {
 				this.user = new UserDto(entity.getUser());

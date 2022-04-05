@@ -44,6 +44,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 			}
 			entity.setName(dto.getName());
 			entity.setStatus(dto.getStatus());
+			entity.setViewIndex(dto.getViewIndex());
 			if(dto.getWorkSpace()!=null&&dto.getWorkSpace().getId()!=null) {
 				workSpace = workSpaceRepository.findById(dto.getWorkSpace().getId()).orElse(null);
 			}

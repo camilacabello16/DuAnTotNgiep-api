@@ -24,11 +24,16 @@ public class WorkSpaceUserDto extends BaseObjectDto {
 	}
 	public WorkSpaceUserDto(WorkSpaceUser entity,boolean check) {
 		if(entity!=null) {
+			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
 			if(entity.getUser()!=null&&entity.getUser().getId()!=null&&check) {
 				this.user = new UserDto(entity.getUser());
 			}
 			if(entity.getWorkSpace()!=null&&entity.getWorkSpace().getId()!=null&&check) {
-				this.workSpace = new WorkSpaceDto(entity.getWorkSpace(),false);
+				this.workSpace = new WorkSpaceDto(entity.getWorkSpace(),true);
 			}
 			this.role = entity.getRole();
 			this.status = entity.getStatus();

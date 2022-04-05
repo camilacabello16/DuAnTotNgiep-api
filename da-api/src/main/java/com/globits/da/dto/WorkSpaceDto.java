@@ -14,8 +14,8 @@ public class WorkSpaceDto extends BaseObjectDto {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private String type;
-	private String visibility;
+	private Integer type;
+	private Integer visibility;
 	private String description;
 	private List<WorkSpaceUserDto> workSpaceUsers;
 	private List<WorkSpaceDto> childs;
@@ -29,6 +29,10 @@ public class WorkSpaceDto extends BaseObjectDto {
 	public WorkSpaceDto(WorkSpace entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
 			this.name = entity.getName();
 			this.type = entity.getType();
 			this.visibility = entity.getVisibility();
@@ -64,16 +68,17 @@ public class WorkSpaceDto extends BaseObjectDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getType() {
+
+	public Integer getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
-	public String getVisibility() {
+	public Integer getVisibility() {
 		return visibility;
 	}
-	public void setVisibility(String visibility) {
+	public void setVisibility(Integer visibility) {
 		this.visibility = visibility;
 	}
 	public String getDescription() {

@@ -24,6 +24,7 @@ import com.globits.da.domain.WorkSpace;
 import com.globits.da.domain.WorkSpaceUser;
 import com.globits.da.dto.WorkSpaceUserDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.WorkSpaceUserSearchDto;
 import com.globits.da.repository.NotificationRepository;
 import com.globits.da.repository.ReceiverNotificationRepository;
 import com.globits.da.repository.WorkSpaceRepository;
@@ -90,7 +91,7 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 	}
 
 	@Override
-	public Page<WorkSpaceUserDto> searchByPage(SearchDto dto) {
+	public Page<WorkSpaceUserDto> searchByPage(WorkSpaceUserSearchDto dto) {
 		if (dto == null) {
 			return null;
 		}
@@ -114,8 +115,15 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
 		}
-
-		
+		if(dto.getUserId()!=null) {
+			whereClause += " AND ( entity.user.id = :userId )";
+		}
+		if(dto.getRole()!=null) {
+			whereClause += " AND ( entity.role = :role )";
+		}
+		if(dto.getStatus()!=null) {
+			whereClause += " AND ( entity.status = :status )";
+		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
 
@@ -125,6 +133,18 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			q.setParameter("text", '%' + dto.getKeyword() + '%');
 			qCount.setParameter("text", '%' + dto.getKeyword() + '%');
+		}
+		if (dto.getUserId() != null) {
+			q.setParameter("userId", dto.getUserId());
+			qCount.setParameter("userId", dto.getUserId());
+		}
+		if (dto.getRole() != null) {
+			q.setParameter("role", dto.getRole());
+			qCount.setParameter("role", dto.getRole());
+		}
+		if (dto.getStatus() != null) {
+			q.setParameter("status", dto.getStatus());
+			qCount.setParameter("status",dto.getStatus());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);
@@ -213,6 +233,28 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 	public List<WorkSpaceUserDto> getWorkSpaceByUserId(Long id) {
 		if(id!=null) {
 			List<WorkSpaceUserDto> result = workSpaceUserRepository.getWorkSpaceUserByUserId(id);
+			if(result!=null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<WorkSpaceUserDto> getWorkSpaceByRole(String role) {
+		if(role!=null) {
+			List<WorkSpaceUserDto> result = workSpaceUserRepository.getWorkSpaceUserByRole(role);
+			if(result!=null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<WorkSpaceUserDto> getWorkSpaceByRoleAndUserId(String role, Long userId) {
+		if(role!=null && userId!=null) {
+			List<WorkSpaceUserDto> result = workSpaceUserRepository.getWorkSpaceUserByRoleAndUserID(role,userId);
 			if(result!=null) {
 				return result;
 			}

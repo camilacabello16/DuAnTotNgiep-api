@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,15 +35,27 @@ public class Task extends BaseObject {
 	@Column(name = "end_date")
 	private Date endDate;
 	
+	@Column(name = "view_index")	
+	private Integer viewIndex;
+	
 	@ManyToOne
 	@JoinColumn(name = "card_id")
 	// @NotFound(action = NotFoundAction.IGNORE)
 	private Card card;
+	
 
 	@OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<Comment> comments; 
 	
-	
+
+	public Integer getViewIndex() {
+		return viewIndex;
+	}
+
+	public void setViewIndex(Integer viewIndex) {
+		this.viewIndex = viewIndex;
+	}
+
 	public Set<Comment> getComments() {
 		return comments;
 	}

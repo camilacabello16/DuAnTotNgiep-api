@@ -33,10 +33,10 @@ public class WorkSpace extends BaseObject {
 	private String name;
 
 	@Column(name = "type")
-	private String type;
+	private Integer type;
 
 	@Column(name = "visibility")
-	private String visibility;
+	private Integer visibility;
 
 	@Column(name = "description")
 	private String description;
@@ -91,19 +91,21 @@ public class WorkSpace extends BaseObject {
 		this.name = name;
 	}
 
-	public String getType() {
+
+
+	public Integer getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 
-	public String getVisibility() {
+	public Integer getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(String visibility) {
+	public void setVisibility(Integer visibility) {
 		this.visibility = visibility;
 	}
 

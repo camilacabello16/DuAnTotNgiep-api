@@ -32,7 +32,10 @@ public class NotificationDto extends BaseObjectDto {
 	
 	public NotificationDto(Notification entity) {
 		this.id = entity.getId();
-		this.creatDate = entity.getCreateDate();
+		this.createDate = entity.getCreateDate();
+		this.createdBy = entity.getCreatedBy();
+		this.modifyDate = entity.getModifyDate();
+		this.modifiedBy = entity.getModifiedBy();
 		this.type = entity.getType();
 		this.content = entity.getContent();
 	}

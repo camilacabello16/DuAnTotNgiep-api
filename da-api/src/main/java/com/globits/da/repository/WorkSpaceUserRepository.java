@@ -13,6 +13,10 @@ import com.globits.da.dto.WorkSpaceUserDto;
 @Repository
 public interface WorkSpaceUserRepository extends JpaRepository<WorkSpaceUser,UUID> {
 	
-	@Query("select new com.globits.da.dto.WorkSpaceUserDto(a) FROM WorkSpaceUser a WHERE a.user.id =:id AND status = 1")
-	List<WorkSpaceUserDto> getWorkSpaceUserByUserId( @Param("id") Long id);
+	@Query("select new com.globits.da.dto.WorkSpaceUserDto(a) FROM WorkSpaceUser a WHERE a.user.id =:userId AND status = 1")
+	List<WorkSpaceUserDto> getWorkSpaceUserByUserId( @Param("userId") Long userId);
+	@Query("select new com.globits.da.dto.WorkSpaceUserDto(a) FROM WorkSpaceUser a WHERE a.role=:role AND status = 1")
+	List<WorkSpaceUserDto> getWorkSpaceUserByRole( @Param("role") String role);
+	@Query("select new com.globits.da.dto.WorkSpaceUserDto(a) FROM WorkSpaceUser a WHERE a.role=:role AND a.user.id =:userId AND status = 1")
+	List<WorkSpaceUserDto> getWorkSpaceUserByRoleAndUserID( @Param("role") String role, @Param("userId") Long userId);
 }

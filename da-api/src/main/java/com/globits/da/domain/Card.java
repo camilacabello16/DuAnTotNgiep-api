@@ -30,8 +30,10 @@ public class Card extends BaseObject {
 	@Column(name = "status")
 	private String status;
 	
+	@Column(name = "view_index")	
+	private Integer viewIndex;
 	@ManyToOne
-	@JoinColumn(name = "board_id")
+	@JoinColumn(name = "workspace_id")
 	// @NotFound(action = NotFoundAction.IGNORE)
 	private WorkSpace workSpace;
 	
@@ -39,6 +41,14 @@ public class Card extends BaseObject {
 	private Set<Task> tasks; 
 	
 	
+
+	public Integer getViewIndex() {
+		return viewIndex;
+	}
+
+	public void setViewIndex(Integer viewIndex) {
+		this.viewIndex = viewIndex;
+	}
 
 	public Set<Task> getTasks() {
 		return tasks;

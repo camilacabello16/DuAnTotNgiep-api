@@ -15,6 +15,7 @@ public class CardDto extends BaseObjectDto{
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String status;
+	private Integer viewIndex;
 	private WorkSpaceDto workSpace;
 	private List<TaskDto> tasks;
 	
@@ -25,8 +26,13 @@ public class CardDto extends BaseObjectDto{
 	public CardDto(Card entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
 			this.name = entity.getName();
 			this.status = entity.getStatus();
+			this.viewIndex = entity.getViewIndex();
 			if(entity.getTasks()!=null&&entity.getTasks().size()>0&&check) {
 				tasks = new ArrayList<>();
 				for(Task task:entity.getTasks()) {
@@ -34,6 +40,14 @@ public class CardDto extends BaseObjectDto{
 				}
 			}
 		}
+	}
+	
+
+	public Integer getViewIndex() {
+		return viewIndex;
+	}
+	public void setViewIndex(Integer viewIndex) {
+		this.viewIndex = viewIndex;
 	}
 	public String getName() {
 		return name;

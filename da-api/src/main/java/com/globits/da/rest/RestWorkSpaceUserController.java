@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.globits.da.dto.WorkSpaceUserDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.WorkSpaceUserSearchDto;
 import com.globits.da.service.WorkSpaceUserService;
 
 @RestController
@@ -35,18 +37,13 @@ public class RestWorkSpaceUserController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ResponseEntity<Page<WorkSpaceUserDto>> search(@RequestBody SearchDto dto) {
+	public ResponseEntity<Page<WorkSpaceUserDto>> search(@RequestBody WorkSpaceUserSearchDto dto) {
 		Page<WorkSpaceUserDto> result = workSpaceUserService.searchByPage(dto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteById(@PathVariable("id") UUID id) {
 		Boolean result = workSpaceUserService.deleteById(id);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-	@RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<List<WorkSpaceUserDto>> getAllByUserId(@PathVariable("userId") Long id) {
-		List<WorkSpaceUserDto> result = workSpaceUserService.getAllByUserId(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/org/{userId}", method = RequestMethod.GET)

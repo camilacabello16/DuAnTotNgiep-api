@@ -45,6 +45,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 			entity.setName(dto.getName());
 			entity.setStartDate(dto.getStartDate());
 			entity.setEndDate(dto.getEndDate());
+			entity.setViewIndex(dto.getViewIndex());
 			if(dto.getCard()!=null&&dto.getCard().getId()!=null) {
 				card = cardRepository.findById(dto.getCard().getId()).orElse(null);
 			}
