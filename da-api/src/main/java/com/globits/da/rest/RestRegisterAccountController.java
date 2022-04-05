@@ -12,7 +12,7 @@ import com.globits.security.dto.UserDto;
 import com.globits.security.service.UserService;
 
 @RestController
-@RequestMapping("/api/register/account")
+@RequestMapping("/oauth/register")
 public class RestRegisterAccountController {
 	
 	@Autowired
@@ -23,14 +23,22 @@ public class RestRegisterAccountController {
 		UserDto result = userService.save(dto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	@RequestMapping(value ="/{username}",  method = RequestMethod.POST)
-	public ResponseEntity<UserDto> findByUserName(@PathVariable(name = "username") String username) {
-		UserDto result = userService.findByUsername(username);
+	@RequestMapping(value ="/username/{username}",  method = RequestMethod.GET)
+	public ResponseEntity<Boolean> findUserByUserName(@PathVariable(name = "username") String username) {
+		Boolean result = false;
+		UserDto userDto = userService.findByUsername(username);
+		if(userDto!=null) {
+			result = true;
+		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	@RequestMapping(value ="/{email}",  method = RequestMethod.POST)
-	public ResponseEntity<UserDto> findByEmail(@PathVariable(name = "email") String email) {
-		UserDto result = userService.findByEmail(email);
+	@RequestMapping(value ="/email/{email}",  method = RequestMethod.GET)
+	public ResponseEntity<Boolean> findUserByEmail(@PathVariable(name = "email") String email) {
+		Boolean result = false;
+		UserDto userDto = userService.findByEmail(email);
+		if(userDto!=null) {
+			result = true;
+		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
