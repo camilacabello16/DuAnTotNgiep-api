@@ -87,16 +87,20 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
-		String sqlCount = "select count(entity.id) from  Task as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.TaskDto(entity,true) from  Task as entity where (1=1)  ";
+		String sqlCount = "select count(entity.id) from  Task as entity join Card c on entity.card.id = c.id join "
+				+ " WorkSpace w on w.id = c.workSpace.id where (1=1)   ";
+		String sql = "select new com.globits.da.dto.TaskDto(entity,true) from  Task as entity join Card c on entity.card.id = c.id join"
+				+ " WorkSpace w on w.id = c.workSpace.id where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
 		}
 		if(dto.getCardId()!=null) {
-			whereClause += " AND ( entity.card.id =:id)";
+			whereClause += " AND ( c.id =:cardId)";
 		}
-		
+		if(dto.getWorkSpaceId()!=null) {
+			whereClause += " AND ( w.id =:workSpaceId)";
+		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
 
@@ -108,8 +112,12 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 			qCount.setParameter("text", '%' + dto.getKeyword() + '%');
 		}
 		if (dto.getCardId() != null) {
-			q.setParameter("id", dto.getCardId() );
-			qCount.setParameter("id", dto.getCardId());
+			q.setParameter("cardId", dto.getCardId() );
+			qCount.setParameter("cardId", dto.getCardId());
+		}
+		if (dto.getWorkSpaceId() != null) {
+			q.setParameter("workSpaceId", dto.getWorkSpaceId() );
+			qCount.setParameter("workSpaceId", dto.getWorkSpaceId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);
