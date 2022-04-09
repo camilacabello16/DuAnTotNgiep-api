@@ -41,7 +41,7 @@ public class RestCardController {
 		Boolean result = cardService.deleteById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	@RequestMapping(value = "/update-view", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/update-view", method = RequestMethod.POST)
 	public ResponseEntity<CardDto> updateViewIndex(@RequestParam(name = "viewIndex") Integer viewIndex,@RequestParam(name = "id") UUID id) {
 		CardDto result = cardService.updateViewIndex(id,viewIndex);
 		return new ResponseEntity<>(result, HttpStatus.OK);

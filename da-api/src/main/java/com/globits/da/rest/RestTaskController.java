@@ -45,7 +45,7 @@ public class RestTaskController {
 		Boolean result = taskService.deleteById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	@RequestMapping(value = "/update-view", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/update-view", method = RequestMethod.POST)
 	public ResponseEntity<TaskDto> updateViewIndex(@RequestParam(name = "viewIndex") Integer viewIndex,@RequestParam(name = "id") UUID id) {
 		TaskDto result = taskService.updateViewIndex(id,viewIndex);
 		return new ResponseEntity<>(result, HttpStatus.OK);
