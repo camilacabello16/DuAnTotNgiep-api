@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.globits.da.dto.CardDto;
 import com.globits.da.dto.TaskDto;
 import com.globits.da.dto.search.SearchDto;
 import com.globits.da.service.TaskService;
@@ -41,6 +43,11 @@ public class RestTaskController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteById(@PathVariable("id") UUID id) {
 		Boolean result = taskService.deleteById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/update-view", method = RequestMethod.DELETE)
+	public ResponseEntity<TaskDto> updateViewIndex(@RequestParam(name = "viewIndex") Integer viewIndex,@RequestParam(name = "id") UUID id) {
+		TaskDto result = taskService.updateViewIndex(id,viewIndex);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

@@ -17,6 +17,7 @@ import com.globits.core.service.impl.GenericServiceImpl;
 import com.globits.da.domain.Card;
 import com.globits.da.domain.Task;
 import com.globits.da.domain.WorkSpace;
+import com.globits.da.dto.CardDto;
 import com.globits.da.dto.TaskDto;
 import com.globits.da.dto.WorkSpaceDto;
 import com.globits.da.dto.search.SearchDto;
@@ -137,6 +138,19 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 				return new TaskDto(entity,true);
 			}
 			
+		}
+		return null;
+	}
+
+	@Override
+	public TaskDto updateViewIndex(UUID id, Integer viewIndex) {
+		if(id!=null&&viewIndex!=null) {
+			Task task = taskRepository.getOne(id);
+			if (task!=null) {
+				task.setViewIndex(viewIndex);
+			}
+			task = taskRepository.save(task);
+			return new TaskDto(task,true);
 		}
 		return null;
 	}

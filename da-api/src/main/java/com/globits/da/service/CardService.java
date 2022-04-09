@@ -18,5 +18,6 @@ public interface CardService extends GenericService<Card,UUID> {
 	public Boolean deleteById(UUID id);
 	Page<CardDto> searchByPage(SearchDto dto);
 	CardDto getById(UUID id);
+	CardDto updateViewIndex(UUID id,Integer viewIndex);
 
 }

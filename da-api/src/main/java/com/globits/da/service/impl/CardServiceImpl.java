@@ -132,4 +132,17 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		return null;
 	}
 
+	@Override
+	public CardDto updateViewIndex(UUID id, Integer viewIndex) {
+		if(id!=null&&viewIndex!=null) {
+			Card card = cardRepository.getOne(id);
+			if (card!=null) {
+				card.setViewIndex(viewIndex);
+			}
+			card = cardRepository.save(card);
+			return new CardDto(card,true);
+		}
+		return null;
+	}
+
 }

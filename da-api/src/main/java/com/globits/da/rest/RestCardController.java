@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.globits.da.dto.CardDto;
@@ -38,6 +39,11 @@ public class RestCardController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteById(@PathVariable("id") UUID id) {
 		Boolean result = cardService.deleteById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/update-view", method = RequestMethod.DELETE)
+	public ResponseEntity<CardDto> updateViewIndex(@RequestParam(name = "viewIndex") Integer viewIndex,@RequestParam(name = "id") UUID id) {
+		CardDto result = cardService.updateViewIndex(id,viewIndex);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

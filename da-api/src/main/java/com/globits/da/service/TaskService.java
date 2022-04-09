@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.globits.core.service.GenericService;
 import com.globits.da.domain.Task;
+import com.globits.da.dto.CardDto;
 import com.globits.da.dto.TaskDto;
 import com.globits.da.dto.WorkSpaceDto;
 import com.globits.da.dto.search.SearchDto;
@@ -18,4 +19,5 @@ public interface TaskService extends GenericService<Task,UUID> {
 	public Boolean deleteById(UUID id);
 	Page<TaskDto> searchByPage(SearchDto dto);
 	TaskDto getById(UUID id);
+	TaskDto updateViewIndex(UUID id,Integer viewIndex);
 }
