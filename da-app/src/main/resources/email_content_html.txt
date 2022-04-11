@@ -1,0 +1,2 @@
+<h3>Im testing send a HTML email</h3>
+<img src='http://www.apache.org/images/asf_logo_wide.gif'>
