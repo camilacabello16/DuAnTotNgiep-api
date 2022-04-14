@@ -2,6 +2,7 @@ package com.globits.da.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.globits.core.dto.BaseObjectDto;
 import com.globits.da.domain.WorkSpace;
@@ -21,7 +22,7 @@ public class WorkSpaceDto extends BaseObjectDto {
 	private List<WorkSpaceDto> childs;
 	private WorkSpaceDto parent;
 	private Long userIdHost;
-	
+	private UUID idTemplateWorkSpace;
 	public WorkSpaceDto() {}
 	public WorkSpaceDto(WorkSpace entity) {
 		this(entity, true);
@@ -108,6 +109,12 @@ public class WorkSpaceDto extends BaseObjectDto {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public UUID getIdTemplateWorkSpace() {
+		return idTemplateWorkSpace;
+	}
+	public void setIdTemplateWorkSpace(UUID idTemplateWorkSpace) {
+		this.idTemplateWorkSpace = idTemplateWorkSpace;
 	}
 	
 	

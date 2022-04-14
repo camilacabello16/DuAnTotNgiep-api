@@ -3,7 +3,6 @@ package com.globits.config;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
@@ -37,10 +35,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		// Real Estate
 		"com.globits.da.domain", "com.globits.da.repository", "com.globits.da.dto", "com.globits.da.service",
 		"com.globits.da.service.impl",
+		//Temaplte
+		"com.globits.da.Template.domain", "com.globits.da.Template.repository", "com.globits.da.Template.dto", "com.globits.da.Template.service",
+		"com.globits.da.Template.service.impl",
 		//CoreSys
 		"com.globits.core.sys.domain", "com.globits.core.sys.repository", "com.globits.core.sys.dto", "com.globits.core.sys.service",
 		"com.globits.core.sys.service.impl",})
-@EnableJpaRepositories(basePackages = { "com.globits.core.sys.repository","com.globits.da.timesheet.repository","com.globits.da.repository","com.globits.core.repository", "com.globits.security.repository" })
+@EnableJpaRepositories(basePackages = { "com.globits.core.sys.repository","com.globits.da.timesheet.repository","com.globits.da.repository","com.globits.core.repository", "com.globits.security.repository","com.globits.da.Template.repository" })
 public class DatabaseConfig {
 
 	@Autowired
@@ -92,7 +93,7 @@ public class DatabaseConfig {
 
 		factory.setDataSource(dataSource());
 		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("com.globits.core.sys.domain","com.globits.da.domain","com.globits.core.domain", "com.globits.security.domain");
+		factory.setPackagesToScan("com.globits.core.sys.domain","com.globits.da.domain","com.globits.core.domain", "com.globits.security.domain","com.globits.da.Template.domain");
 
 		Properties jpaProperties = new Properties();
 		jpaProperties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));

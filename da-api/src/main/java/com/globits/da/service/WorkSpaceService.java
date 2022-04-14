@@ -1,5 +1,6 @@
 package com.globits.da.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import com.globits.da.dto.search.SearchDto;
 public interface WorkSpaceService  extends GenericService<WorkSpace,UUID>{
 	
 	WorkSpaceDto saveOrUpdate(UUID id,WorkSpaceDto dto);
+	WorkSpaceDto cloneTemplateWorkSpace(WorkSpaceDto dto);
 	Boolean deleteById(UUID id);
 	Page<WorkSpaceDto> searchByPage(SearchDto dto);
 	WorkSpaceDto getById(UUID id);

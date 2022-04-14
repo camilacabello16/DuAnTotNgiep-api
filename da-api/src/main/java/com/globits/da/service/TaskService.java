@@ -11,13 +11,14 @@ import com.globits.da.dto.CardDto;
 import com.globits.da.dto.TaskDto;
 import com.globits.da.dto.WorkSpaceDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.TaskSearchDto;
 
 @Service
 public interface TaskService extends GenericService<Task,UUID> {
 	
 	public TaskDto saveOrUpdate(UUID id,TaskDto dto);
 	public Boolean deleteById(UUID id);
-	Page<TaskDto> searchByPage(SearchDto dto);
+	Page<TaskDto> searchByPage(TaskSearchDto dto);
 	TaskDto getById(UUID id);
 	TaskDto updateViewIndex(UUID id,Integer viewIndex);
 }

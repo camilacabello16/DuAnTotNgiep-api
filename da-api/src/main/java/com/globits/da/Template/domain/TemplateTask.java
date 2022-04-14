@@ -1,4 +1,4 @@
-package com.globits.da.domain;
+package com.globits.da.Template.domain;
 
 import java.util.Date;
 import java.util.Set;
@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -16,12 +14,13 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.globits.core.domain.BaseObject;
-import com.globits.security.domain.User;
+import com.globits.da.domain.Card;
+import com.globits.da.domain.Comment;
 
 @Entity
-@Table(name = "tbl_task")
+@Table(name = "tbl_template_task")
 @XmlRootElement
-public class Task extends BaseObject {
+public class TemplateTask extends BaseObject {
 
 	/**
 	 * 
@@ -40,33 +39,17 @@ public class Task extends BaseObject {
 	private Integer viewIndex;
 	
 	@ManyToOne
-	@JoinColumn(name = "card_id")
+	@JoinColumn(name = "template_card_id")
 	// @NotFound(action = NotFoundAction.IGNORE)
-	private Card card;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	// @NotFound(action = NotFoundAction.IGNORE)
-	private User user;
+	private TemplateCard templateCard;
 
-	@OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private Set<Comment> comments; 
 	
-
 	public Integer getViewIndex() {
 		return viewIndex;
 	}
 
 	public void setViewIndex(Integer viewIndex) {
 		this.viewIndex = viewIndex;
-	}
-
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
 	}
 
 	public String getName() {
@@ -93,24 +76,18 @@ public class Task extends BaseObject {
 		this.endDate = endDate;
 	}
 
-	public Card getCard() {
-		return card;
+
+
+	public TemplateCard getTemplateCard() {
+		return templateCard;
 	}
 
-	public void setCard(Card card) {
-		this.card = card;
+	public void setTemplateCard(TemplateCard templateCard) {
+		this.templateCard = templateCard;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	

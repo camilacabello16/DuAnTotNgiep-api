@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.globits.da.dto.CardDto;
 import com.globits.da.dto.TaskDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.TaskSearchDto;
 import com.globits.da.service.TaskService;
 
 @RestController
@@ -36,7 +37,7 @@ public class RestTaskController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ResponseEntity<Page<TaskDto>> search(@RequestBody SearchDto dto) {
+	public ResponseEntity<Page<TaskDto>> search(@RequestBody TaskSearchDto dto) {
 		Page<TaskDto> result = taskService.searchByPage(dto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

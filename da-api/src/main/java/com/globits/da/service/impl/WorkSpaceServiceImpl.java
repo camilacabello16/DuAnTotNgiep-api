@@ -1,5 +1,6 @@
 package com.globits.da.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -18,10 +19,20 @@ import org.springframework.util.StringUtils;
 
 import com.globits.core.service.impl.GenericServiceImpl;
 import com.globits.da.WorkSpaceConstants;
+import com.globits.da.Template.domain.TemplateCard;
+import com.globits.da.Template.domain.TemplateTask;
+import com.globits.da.Template.domain.TemplateWorkSpace;
+import com.globits.da.Template.dto.TemplateWorkSpaceDto;
+import com.globits.da.Template.repository.TemplateCardRepository;
+import com.globits.da.Template.repository.TemplateWorkSpaceRepository;
+import com.globits.da.Template.service.TemplateWorkSpaceService;
+import com.globits.da.domain.Card;
+import com.globits.da.domain.Task;
 import com.globits.da.domain.WorkSpace;
 import com.globits.da.domain.WorkSpaceUser;
 import com.globits.da.dto.WorkSpaceDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.repository.CardRepository;
 import com.globits.da.repository.WorkSpaceRepository;
 import com.globits.da.repository.WorkSpaceUserRepository;
 import com.globits.da.service.WorkSpaceService;
@@ -40,6 +51,14 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 	private UserRepository userRepository;
 	@Autowired
 	private WorkSpaceUserRepository workSpaceUserRepository;
+	@Autowired
+	private TemplateWorkSpaceRepository templateWorkSpaceRepository;
+	@Autowired
+	private TemplateWorkSpaceService templateWorkSpaceService;
+	@Autowired
+	private TemplateCardRepository templateCardRepository;
+	@Autowired
+	private CardRepository cardRepository;
 	@Override
 	public WorkSpaceDto saveOrUpdate(UUID id, WorkSpaceDto dto) {
 		if(dto!=null) {
@@ -143,4 +162,83 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 		return null;
 	}
 
+	@Override
+	public WorkSpaceDto cloneTemplateWorkSpace(WorkSpaceDto dto) {
+		if(dto!=null) {
+			TemplateWorkSpaceDto templateWorkSpaceDto = null;
+			WorkSpaceDto workSpaceDto = new WorkSpaceDto();
+			if(dto.getIdTemplateWorkSpace()!=null) {
+				templateWorkSpaceDto = templateWorkSpaceService.getById(dto.getIdTemplateWorkSpace());
+			}
+			workSpaceDto.setName(templateWorkSpaceDto.getName());
+			workSpaceDto.setVisibility(templateWorkSpaceDto.getVisibility());
+			workSpaceDto.setDescription(templateWorkSpaceDto.getDescription());
+			workSpaceDto.setUserIdHost(dto.getUserIdHost());
+			workSpaceDto = this.saveOrUpdate(null, workSpaceDto);
+			if(templateWorkSpaceDto.getChilds()!=null&&templateWorkSpaceDto.getChilds().size()>0) {
+				for(TemplateWorkSpaceDto child:templateWorkSpaceDto.getChilds()) {
+					WorkSpace workSpaceChild = new WorkSpace();
+					WorkSpace parent = null;
+					if(child!=null&&child.getId()!=null) {
+						workSpaceChild.setName(child.getName());
+						workSpaceChild.setType(child.getType());
+						workSpaceChild.setDescription(child.getDescription());
+						workSpaceChild.setVisibility(child.getVisibility());
+						if(workSpaceDto!=null&&workSpaceDto.getId()!=null) {
+							parent = workSpaceRepository.findById(workSpaceDto.getId()).orElse(null);
+						}
+						workSpaceChild.setParent(parent);
+						workSpaceChild = workSpaceRepository.save(workSpaceChild);
+						List<TemplateCard> templateCards = templateCardRepository.getTemplateCardByWorkSpaceId(child.getId());
+						Set<Card> cards = null;
+						if(templateCards!=null) {
+							cards = this.convertTemplateCard(templateCards,workSpaceChild);
+							if(cards!=null) {
+								cardRepository.saveAll(cards);
+							}
+						}
+					}
+					
+				}
+			}
+			if(workSpaceDto!=null) {
+				return workSpaceDto;
+			}
+			
+		}
+		return null;
+	}
+
+	
+	Set<Card> convertTemplateCard(List<TemplateCard> templateCards,WorkSpace workSpace){
+		Set<Card> result = new HashSet<Card>();
+		if(templateCards!=null&&templateCards.size()>0) {
+			for(TemplateCard templateCard:templateCards) {
+				Card card = new Card();
+				Set<Task> tasks = new HashSet<Task>();
+				card.setName(templateCard.getName());
+				card.setStatus(templateCard.getStatus());
+				card.setViewIndex(templateCard.getViewIndex());
+				if(templateCard.getTemplateTasks()!=null&&templateCard.getTemplateTasks().size()>0) {
+					for(TemplateTask templateTask:templateCard.getTemplateTasks()) {
+						Task task = new Task();
+						task.setName(templateTask.getName());
+						task.setStartDate(templateTask.getStartDate());
+						task.setEndDate(templateTask.getEndDate());
+						task.setViewIndex(templateTask.getViewIndex());
+						task.setCard(card);
+						tasks.add(task);
+					}
+				}
+				card.setTasks(tasks);
+				card.setWorkSpace(workSpace);
+				result.add(card);
+			}
+			if(result!=null) {
+				return result;
+			}
+		}
+		return null;
+		
+	}
 }

@@ -21,9 +21,12 @@ import com.globits.da.dto.CardDto;
 import com.globits.da.dto.TaskDto;
 import com.globits.da.dto.WorkSpaceDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.TaskSearchDto;
 import com.globits.da.repository.CardRepository;
 import com.globits.da.repository.TaskRepository;
 import com.globits.da.service.TaskService;
+import com.globits.security.domain.User;
+import com.globits.security.repository.UserRepository;
 
 @Service
 public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements TaskService {
@@ -32,11 +35,14 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 	TaskRepository taskRepository;
 	@Autowired
 	CardRepository cardRepository;
+	@Autowired
+	UserRepository userRepository;
 	@Override
 	public TaskDto saveOrUpdate(UUID id, TaskDto dto) {
 		if(dto!=null) {
 			Task entity = null;
 			Card card = null;
+			User user = null;
 			if(id!=null) {
 				entity = taskRepository.getOne(id);
 			}
@@ -50,7 +56,11 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 			if(dto.getCard()!=null&&dto.getCard().getId()!=null) {
 				card = cardRepository.findById(dto.getCard().getId()).orElse(null);
 			}
+			if(dto.getUser()!=null&&dto.getUser().getId()!=null) {
+				user = userRepository.findById(dto.getUser().getId()).orElse(null);
+			}
 			entity.setCard(card);
+			entity.setUser(user);
 			entity = taskRepository.save(entity);
 			if(entity!=null) {
 				return new TaskDto(entity,true);
@@ -70,7 +80,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 	}
 
 	@Override
-	public Page<TaskDto> searchByPage(SearchDto dto) {
+	public Page<TaskDto> searchByPage(TaskSearchDto dto) {
 		if (dto == null) {
 			return null;
 		}
@@ -102,6 +112,9 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		if(dto.getWorkSpaceId()!=null) {
 			whereClause += " AND ( w.id =:workSpaceId)";
 		}
+		if(dto.getUserId()!=null) {
+			whereClause += " AND ( entity.user.id =:userId)";
+		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
 
@@ -119,6 +132,10 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		if (dto.getWorkSpaceId() != null) {
 			q.setParameter("workSpaceId", dto.getWorkSpaceId() );
 			qCount.setParameter("workSpaceId", dto.getWorkSpaceId());
+		}
+		if (dto.getUserId() != null) {
+			q.setParameter("userId", dto.getUserId() );
+			qCount.setParameter("userId", dto.getUserId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);

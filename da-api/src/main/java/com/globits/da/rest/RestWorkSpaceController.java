@@ -28,6 +28,11 @@ public class RestWorkSpaceController {
 		WorkSpaceDto result = workSpaceService.saveOrUpdate(null, dto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/clone-template" ,method = RequestMethod.POST)
+	public ResponseEntity<WorkSpaceDto> cloneTemplate(@RequestBody WorkSpaceDto dto) {
+		WorkSpaceDto result = workSpaceService.cloneTemplateWorkSpace(dto);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<WorkSpaceDto> update(@RequestBody WorkSpaceDto dto,@PathVariable("id") UUID id) {
 		WorkSpaceDto result = workSpaceService.saveOrUpdate(id, dto);

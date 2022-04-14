@@ -1,29 +1,38 @@
-package com.globits.da.dto;
+package com.globits.da.Template.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.globits.core.dto.BaseObjectDto;
+import com.globits.da.Template.domain.TemplateCard;
+import com.globits.da.Template.domain.TemplateTask;
 import com.globits.da.domain.Card;
 import com.globits.da.domain.Task;
+import com.globits.da.dto.TaskDto;
 
-public class CardDto extends BaseObjectDto{
+
+public class TemplateCardDto extends BaseObjectDto {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private String name;
+
 	private String status;
-	private Integer viewIndex;
-	private WorkSpaceDto workSpace;
-	private List<TaskDto> tasks;
 	
-	public CardDto() {}
-	public CardDto(Card entity) {
+	private Integer viewIndex;
+
+	private TemplateWorkSpaceDto workSpace;
+
+	private List<TemplateTaskDto> tasks;
+	
+	public TemplateCardDto() {}
+	public TemplateCardDto(TemplateCard entity) {
 		
 	}
-	public CardDto(Card entity,boolean check) {
+	public TemplateCardDto(TemplateCard entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
 			this.createDate = entity.getCreateDate();
@@ -33,50 +42,53 @@ public class CardDto extends BaseObjectDto{
 			this.name = entity.getName();
 			this.status = entity.getStatus();
 			this.viewIndex = entity.getViewIndex();
-			if(entity.getTasks()!=null&&entity.getTasks().size()>0&&check) {
+			if(entity.getTemplateTasks()!=null&&entity.getTemplateTasks().size()>0&&check) {
 				tasks = new ArrayList<>();
-				for(Task task:entity.getTasks()) {
-					this.tasks.add(new TaskDto(task,false));
+				for(TemplateTask task: entity.getTemplateTasks()) {
+					this.tasks.add(new TemplateTaskDto(task,false));
 				}
 			}
 		}
 	}
-	
-	public Integer getViewIndex() {
-		return viewIndex;
-	}
-	public void setViewIndex(Integer viewIndex) {
-		this.viewIndex = viewIndex;
-	}
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public WorkSpaceDto getWorkSpace() {
+	public Integer getViewIndex() {
+		return viewIndex;
+	}
+
+	public void setViewIndex(Integer viewIndex) {
+		this.viewIndex = viewIndex;
+	}
+
+	public TemplateWorkSpaceDto getWorkSpace() {
 		return workSpace;
 	}
-	public void setWorkSpace(WorkSpaceDto workSpace) {
+
+	public void setWorkSpace(TemplateWorkSpaceDto workSpace) {
 		this.workSpace = workSpace;
 	}
-	public List<TaskDto> getTasks() {
+
+	public List<TemplateTaskDto> getTasks() {
 		return tasks;
 	}
-	public void setTasks(List<TaskDto> tasks) {
-		this.tasks = tasks;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
 
+	public void setTasks(List<TemplateTaskDto> tasks) {
+		this.tasks = tasks;
+	} 
+	
+	
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import com.globits.core.dto.BaseObjectDto;
 import com.globits.da.domain.Comment;
 import com.globits.da.domain.Task;
+import com.globits.security.dto.UserDto;
 
 public class TaskDto extends BaseObjectDto {
 
@@ -20,6 +21,7 @@ public class TaskDto extends BaseObjectDto {
 	private CardDto card;
 	private Integer viewIndex;
 	private List<CommentDto> comments;
+	private UserDto user;
 	public TaskDto() {}
 	public TaskDto(Task entity) {
 		this(entity, true);
@@ -43,6 +45,9 @@ public class TaskDto extends BaseObjectDto {
 				for(Comment comment:entity.getComments()) {
 					this.comments.add(new CommentDto(comment,false));
 				}
+			}
+			if(entity.getUser()!=null&&entity.getUser().getId()!=null) {
+				this.user = new UserDto(entity.getUser());
 			}
 		}
 	}
@@ -87,6 +92,12 @@ public class TaskDto extends BaseObjectDto {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public UserDto getUser() {
+		return user;
+	}
+	public void setUser(UserDto user) {
+		this.user = user;
 	}
 	
 	
