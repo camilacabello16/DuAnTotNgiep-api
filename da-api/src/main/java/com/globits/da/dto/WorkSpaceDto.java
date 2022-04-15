@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.globits.core.dto.BaseObjectDto;
+import com.globits.da.domain.Card;
 import com.globits.da.domain.WorkSpace;
 import com.globits.da.domain.WorkSpaceUser;
 
@@ -23,6 +24,7 @@ public class WorkSpaceDto extends BaseObjectDto {
 	private WorkSpaceDto parent;
 	private Long userIdHost;
 	private UUID idTemplateWorkSpace;
+	private List<CardDto>cards ;
 	public WorkSpaceDto() {}
 	public WorkSpaceDto(WorkSpace entity) {
 		this(entity, true);
@@ -52,6 +54,12 @@ public class WorkSpaceDto extends BaseObjectDto {
 			}
 			if(entity.getParent()!=null&&entity.getParent().getId()!=null&&check) {
 				this.parent = new WorkSpaceDto(entity.getParent(),false);
+			}
+			if(entity.getCards()!=null&&entity.getCards().size()>0) {
+				cards =new ArrayList<CardDto>();
+				for(Card card:entity.getCards()) {
+					this.cards.add(new CardDto(card));
+				}
 			}
 		}
 	}
@@ -115,6 +123,12 @@ public class WorkSpaceDto extends BaseObjectDto {
 	}
 	public void setIdTemplateWorkSpace(UUID idTemplateWorkSpace) {
 		this.idTemplateWorkSpace = idTemplateWorkSpace;
+	}
+	public List<CardDto> getCards() {
+		return cards;
+	}
+	public void setCards(List<CardDto> cards) {
+		this.cards = cards;
 	}
 	
 	

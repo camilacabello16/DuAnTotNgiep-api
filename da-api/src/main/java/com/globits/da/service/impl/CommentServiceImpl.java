@@ -66,7 +66,7 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, UUID> implem
 			entity.setUser(user);
 			entity = CommentRepository.save(entity);
 			if(entity!=null) {
-				return new CommentDto(entity,true);
+				return new CommentDto(entity);
 			}
 		}
 		return null;
@@ -101,7 +101,7 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, UUID> implem
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
 		String sqlCount = "select count(entity.id) from  Comment as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.CommentDto(entity,true) from  Comment as entity where (1=1)  ";
+		String sql = "select new com.globits.da.dto.CommentDto(entity) from  Comment as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
@@ -134,7 +134,7 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, UUID> implem
 		if(id!=null) {			
 			Comment entity = CommentRepository.getOne(id);
 			if(entity!=null) {
-				return new CommentDto(entity,true);
+				return new CommentDto(entity);
 			}
 			
 		}

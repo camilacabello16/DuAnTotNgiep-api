@@ -15,10 +15,8 @@ public class CommentDto extends BaseObjectDto {
 	private TaskDto task;
 	
 	public CommentDto() {}
+
 	public CommentDto(Comment entity) {
-		this(entity, true);
-	}
-	public CommentDto(Comment entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
 			this.createDate = entity.getCreateDate();
@@ -26,12 +24,10 @@ public class CommentDto extends BaseObjectDto {
 			this.modifyDate = entity.getModifyDate();
 			this.modifiedBy = entity.getModifiedBy();
 			this.content = entity.getContent();
-			if(entity.getUser()!=null&&entity.getUser().getId()!=null&&check) {
+			if(entity.getUser()!=null&&entity.getUser().getId()!=null) {
 				this.user = new UserDto(entity.getUser());
 			}
-			if(entity.getTask()!=null&&entity.getTask().getId()!=null&&check) {
-				this.task = new TaskDto(entity.getTask(),false);
-			}
+
 		}
 	}
 	public String getContent() {

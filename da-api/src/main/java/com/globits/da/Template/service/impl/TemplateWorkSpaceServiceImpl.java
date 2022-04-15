@@ -48,7 +48,6 @@ public class TemplateWorkSpaceServiceImpl extends GenericServiceImpl<TemplateWor
 	public TemplateWorkSpaceDto saveOrUpdate(UUID id, TemplateWorkSpaceDto dto) {
 		if (dto != null) {
 			TemplateWorkSpace entity = null;
-			TemplateWorkSpace parent = null;
 			User user = null;
 			if (id != null) {
 				entity = templateWorkSpaceRepository.getOne(id);
@@ -59,96 +58,67 @@ public class TemplateWorkSpaceServiceImpl extends GenericServiceImpl<TemplateWor
 			entity.setName(dto.getName());
 			entity.setType(dto.getType());
 			entity.setVisibility(dto.getVisibility());
-			if (dto.getParent() != null && dto.getParent().getId() != null) {
-				parent = templateWorkSpaceRepository.findById(dto.getParent().getId()).orElse(null);
-			}
 			if (dto.getUserIdHost() != null) {
 				user = userRepository.findById(dto.getUserIdHost()).orElse(null);
 			}
 			entity.setUser(user);
-			entity.setParent(parent);
-			if (dto.getChilds() != null && dto.getChilds().size() > 0) {
-				Set<TemplateWorkSpace> templateWorkSpaces = new HashSet<TemplateWorkSpace>();
-				for (TemplateWorkSpaceDto child : dto.getChilds()) {
-					TemplateWorkSpace workSpaceChild = null;
-					if (child != null && child.getId() != null) {
-						workSpaceChild = templateWorkSpaceRepository.getOne(child.getId());
+
+			if (dto.getCards() != null && dto.getCards().size() > 0) {
+				Set<TemplateCard> templateCards = new HashSet<TemplateCard>();
+				for (TemplateCardDto templateCardDto : dto.getCards()) {
+					TemplateCard templateCard = null;
+					if (templateCardDto != null && templateCardDto.getId() != null) {
+						templateCard = templateCardRepository.getOne(templateCardDto.getId());
 					} else {
-						workSpaceChild = new TemplateWorkSpace();
+						templateCard = new TemplateCard();
 					}
-					workSpaceChild.setName(child.getName());
-					workSpaceChild.setType(child.getType());
-					workSpaceChild.setDescription(child.getDescription());
-					workSpaceChild.setVisibility(child.getVisibility());
-					workSpaceChild.setParent(entity);
-					if (child.getCards() != null && child.getCards().size() > 0) {
-						Set<TemplateCard> templateCards = new HashSet<TemplateCard>();
-						for (TemplateCardDto templateCardDto : child.getCards()) {
-							TemplateCard templateCard = null;
-							if (templateCardDto != null && templateCardDto.getId() != null) {
-								templateCard = templateCardRepository.getOne(templateCardDto.getId());
-							} else {
-								templateCard = new TemplateCard();
-							}
-							templateCard.setName(templateCardDto.getName());
-							templateCard.setStatus(templateCardDto.getStatus());
-							templateCard.setViewIndex(templateCardDto.getViewIndex());
-							templateCard.setTemplateWorkSpace(workSpaceChild);
+					templateCard.setName(templateCardDto.getName());
+					templateCard.setStatus(templateCardDto.getStatus());
+					templateCard.setViewIndex(templateCardDto.getViewIndex());
+					templateCard.setTemplateWorkSpace(entity);
 
-							if (templateCardDto.getTasks() != null && templateCardDto.getTasks().size() > 0) {
-								Set<TemplateTask> templateTasks = new HashSet<TemplateTask>();
-								for (TemplateTaskDto taskDto : templateCardDto.getTasks()) {
-									TemplateTask templateTask = null;
-									if (taskDto != null && taskDto.getId() != null) {
-										templateTask = templateTaskRepository.getOne(taskDto.getId());
-									} else {
-										templateTask = new TemplateTask();
-									}
-									templateTask.setName(taskDto.getName());
-									templateTask.setStartDate(taskDto.getStartDate());
-									templateTask.setEndDate(taskDto.getEndDate());
-									templateTask.setViewIndex(taskDto.getViewIndex());
-									templateTask.setTemplateCard(templateCard);
-									templateTasks.add(templateTask);
-								}
-								if (templateCard.getTemplateTasks() != null) {
-									templateCard.getTemplateTasks().clear();
-									templateCard.getTemplateTasks().addAll(templateTasks);
-								} else {
-									templateCard.setTemplateTasks(templateTasks);
-								}
-
+					if (templateCardDto.getTasks() != null && templateCardDto.getTasks().size() > 0) {
+						Set<TemplateTask> templateTasks = new HashSet<TemplateTask>();
+						for (TemplateTaskDto taskDto : templateCardDto.getTasks()) {
+							TemplateTask templateTask = null;
+							if (taskDto != null && taskDto.getId() != null) {
+								templateTask = templateTaskRepository.getOne(taskDto.getId());
 							} else {
-								if (templateCard.getTemplateTasks() != null) {
-									templateCard.getTemplateTasks().clear();
-								}
+								templateTask = new TemplateTask();
 							}
-							templateCards.add(templateCard);
+							templateTask.setName(taskDto.getName());
+							templateTask.setStartDate(taskDto.getStartDate());
+							templateTask.setEndDate(taskDto.getEndDate());
+							templateTask.setViewIndex(taskDto.getViewIndex());
+							templateTask.setTemplateCard(templateCard);
+							templateTasks.add(templateTask);
 						}
-						if (workSpaceChild.getTemplateCards() != null) {
-							workSpaceChild.getTemplateCards().clear();
-							workSpaceChild.getTemplateCards().addAll(templateCards);
+						if (templateCard.getTemplateTasks() != null) {
+							templateCard.getTemplateTasks().clear();
+							templateCard.getTemplateTasks().addAll(templateTasks);
 						} else {
-							workSpaceChild.setTemplateCards(templateCards);
+							templateCard.setTemplateTasks(templateTasks);
 						}
+
 					} else {
-						if (workSpaceChild.getTemplateCards() != null) {
-							workSpaceChild.getTemplateCards().clear();
+						if (templateCard.getTemplateTasks() != null) {
+							templateCard.getTemplateTasks().clear();
 						}
 					}
-					templateWorkSpaces.add(workSpaceChild);
+					templateCards.add(templateCard);
 				}
-				if (entity.getChilds() != null) {
-					entity.getChilds().clear();
-					entity.getChilds().addAll(templateWorkSpaces);
+				if (entity.getTemplateCards() != null) {
+					entity.getTemplateCards().clear();
+					entity.getTemplateCards().addAll(templateCards);
 				} else {
-					entity.setChilds(templateWorkSpaces);
+					entity.setTemplateCards(templateCards);
 				}
 			} else {
-				if (entity.getChilds() != null) {
-					entity.getChilds().clear();
+				if (entity.getTemplateCards() != null) {
+					entity.getTemplateCards().clear();
 				}
 			}
+
 			entity = templateWorkSpaceRepository.save(entity);
 			if (entity != null) {
 				return new TemplateWorkSpaceDto(entity, true);
