@@ -29,23 +29,17 @@ public class TemplateCardDto extends BaseObjectDto {
 	private List<TemplateTaskDto> tasks;
 	
 	public TemplateCardDto() {}
+
 	public TemplateCardDto(TemplateCard entity) {
-		
-	}
-	public TemplateCardDto(TemplateCard entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
-			this.createDate = entity.getCreateDate();
-			this.createdBy = entity.getCreatedBy();
-			this.modifyDate = entity.getModifyDate();
-			this.modifiedBy = entity.getModifiedBy();
 			this.name = entity.getName();
 			this.status = entity.getStatus();
 			this.viewIndex = entity.getViewIndex();
-			if(entity.getTemplateTasks()!=null&&entity.getTemplateTasks().size()>0&&check) {
+			if(entity.getTemplateTasks()!=null&&entity.getTemplateTasks().size()>0) {
 				tasks = new ArrayList<>();
 				for(TemplateTask task: entity.getTemplateTasks()) {
-					this.tasks.add(new TemplateTaskDto(task,false));
+					this.tasks.add(new TemplateTaskDto(task));
 				}
 			}
 		}

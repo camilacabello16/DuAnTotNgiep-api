@@ -50,7 +50,7 @@ public class TemplateTaskServiceImpl extends GenericServiceImpl<TemplateTask, UU
             entity = templateTaskRepository.save(entity);
            
             if(entity!=null) {
-            	return new TemplateTaskDto(entity,true);
+            	return new TemplateTaskDto(entity);
             }
 		}
 		return null;
@@ -85,7 +85,7 @@ public class TemplateTaskServiceImpl extends GenericServiceImpl<TemplateTask, UU
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
 		String sqlCount = "select count(entity.id) from  TemplateTask as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.TemplateTaskDto(entity,true) from  TemplateTask as entity where (1=1)  ";
+		String sql = "select new com.globits.da.dto.TemplateTaskDto(entity) from  TemplateTask as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
@@ -117,7 +117,7 @@ public class TemplateTaskServiceImpl extends GenericServiceImpl<TemplateTask, UU
 		if(id!=null) {			
 			TemplateTask entity = templateTaskRepository.getOne(id);
 			if(entity!=null) {
-				return new TemplateTaskDto(entity,true);
+				return new TemplateTaskDto(entity);
 			}
 			
 		}
