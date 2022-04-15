@@ -26,24 +26,14 @@ public class TemplateTaskDto extends BaseObjectDto {
 	private TemplateCardDto templateCard;
 	
 	public TemplateTaskDto() {}
+
 	public TemplateTaskDto(TemplateTask entity) {
-		this(entity, true);
-	}
-	public TemplateTaskDto(TemplateTask entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
-			this.createDate = entity.getCreateDate();
-			this.createdBy = entity.getCreatedBy();
-			this.modifyDate = entity.getModifyDate();
-			this.modifiedBy = entity.getModifiedBy();
 			this.name = entity.getName();
 			this.startDate = entity.getStartDate();
 			this.endDate = entity.getEndDate();
 			this.viewIndex = entity.getViewIndex();
-			if(entity.getTemplateCard()!=null&&entity.getTemplateCard().getId()!=null&&check) {
-				this.templateCard = new TemplateCardDto(entity.getTemplateCard(),false);
-			}
-			
 		}
 	}
 	

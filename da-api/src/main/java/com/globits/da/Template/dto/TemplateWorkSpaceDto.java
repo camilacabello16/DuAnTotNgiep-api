@@ -3,7 +3,9 @@ package com.globits.da.Template.dto;
 import java.util.ArrayList;
 import java.util.List;
 import com.globits.core.dto.BaseObjectDto;
+import com.globits.da.Template.domain.TemplateCard;
 import com.globits.da.Template.domain.TemplateWorkSpace;
+import com.globits.da.domain.Card;
 import com.globits.da.domain.WorkSpace;
 import com.globits.da.dto.WorkSpaceDto;
 import com.globits.security.dto.UserDto;
@@ -23,6 +25,7 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 	private TemplateWorkSpaceDto parent;
 	private UserDto user;
 	private Long userIdHost;
+	private List<TemplateCardDto> cards;
 	public TemplateWorkSpaceDto() {
 		super();
 	}
@@ -38,6 +41,7 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 				childs = new ArrayList<>();
 				for(TemplateWorkSpace workSpace:entity.getChilds()) {
 					this.childs.add(new TemplateWorkSpaceDto(workSpace,false));
+					
 				}
 			}
 			if(entity.getParent()!=null&&entity.getParent().getId()!=null&&check) {
@@ -45,6 +49,12 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 			}
 			if(entity.getUser()!=null&&entity.getUser().getId()!=null) {
 				this.user = new UserDto(entity.getUser());
+			}
+			if(entity.getTemplateCards()!=null&&entity.getTemplateCards().size()>0) {
+				cards = new ArrayList<TemplateCardDto>();
+				for(TemplateCard templateCard:entity.getTemplateCards()) {
+					this.cards.add(new TemplateCardDto(templateCard));
+				}
 			}
 		}
 	}
@@ -105,6 +115,16 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 	public void setParent(TemplateWorkSpaceDto parent) {
 		this.parent = parent;
 	}
+
+	public List<TemplateCardDto> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<TemplateCardDto> cards) {
+		this.cards = cards;
+	}
+
+	
 	
 	
 	

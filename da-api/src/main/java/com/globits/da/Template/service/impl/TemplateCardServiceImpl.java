@@ -51,7 +51,7 @@ public class TemplateCardServiceImpl extends GenericServiceImpl<TemplateCard, UU
             entity = templateCardRepository.save(entity);
            
             if(entity!=null) {
-            	return new TemplateCardDto(entity,true);
+            	return new TemplateCardDto(entity);
             }
 		}
 		return null;
@@ -86,7 +86,7 @@ public class TemplateCardServiceImpl extends GenericServiceImpl<TemplateCard, UU
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
 		String sqlCount = "select count(entity.id) from  TemplateCard as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.TemplateCardDto(entity,true) from  TemplateCard as entity where (1=1)  ";
+		String sql = "select new com.globits.da.dto.TemplateCardDto(entity) from  TemplateCard as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
@@ -118,7 +118,7 @@ public class TemplateCardServiceImpl extends GenericServiceImpl<TemplateCard, UU
 		if(id!=null) {			
 			TemplateCard entity = templateCardRepository.getOne(id);
 			if(entity!=null) {
-				return new TemplateCardDto(entity,true);
+				return new TemplateCardDto(entity);
 			}
 			
 		}

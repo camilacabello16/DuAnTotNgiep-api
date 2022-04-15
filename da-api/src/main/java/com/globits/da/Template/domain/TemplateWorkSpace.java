@@ -49,6 +49,18 @@ public class TemplateWorkSpace extends BaseObject {
 	// @NotFound(action = NotFoundAction.IGNORE)
 	private User user;
 	
+	@OneToMany(mappedBy = "templateWorkSpace", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private Set<TemplateCard> templateCards; 
+	
+	
+	public Set<TemplateCard> getTemplateCards() {
+		return templateCards;
+	}
+
+	public void setTemplateCards(Set<TemplateCard> templateCards) {
+		this.templateCards = templateCards;
+	}
+
 	public Set<TemplateWorkSpace> getChilds() {
 		return childs;
 	}
