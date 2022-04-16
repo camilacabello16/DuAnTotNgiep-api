@@ -36,14 +36,6 @@ public class TemplateWorkSpace extends BaseObject {
 	@Column(name = "description")
 	private String description;
 	
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private Set<TemplateWorkSpace> childs; 
-	
-	@ManyToOne
-	@JoinColumn(name = "parent_id")
-	// @NotFound(action = NotFoundAction.IGNORE)
-	private TemplateWorkSpace parent;
-	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	// @NotFound(action = NotFoundAction.IGNORE)
@@ -61,21 +53,7 @@ public class TemplateWorkSpace extends BaseObject {
 		this.templateCards = templateCards;
 	}
 
-	public Set<TemplateWorkSpace> getChilds() {
-		return childs;
-	}
 
-	public void setChilds(Set<TemplateWorkSpace> childs) {
-		this.childs = childs;
-	}
-
-	public TemplateWorkSpace getParent() {
-		return parent;
-	}
-
-	public void setParent(TemplateWorkSpace parent) {
-		this.parent = parent;
-	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

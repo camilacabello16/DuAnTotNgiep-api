@@ -52,7 +52,18 @@ public class WorkSpace extends BaseObject {
 	// @NotFound(action = NotFoundAction.IGNORE)
 	private WorkSpace parent;
 	
+	@OneToMany(mappedBy = "workSpace", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private Set<Card> cards; 
 	
+	
+	public Set<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(Set<Card> cards) {
+		this.cards = cards;
+	}
+
 	public Set<WorkSpace> getChilds() {
 		return childs;
 	}

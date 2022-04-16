@@ -21,8 +21,6 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 	private Integer type;
 	private Integer visibility;
 	private String description;
-	private List<TemplateWorkSpaceDto> childs; 
-	private TemplateWorkSpaceDto parent;
 	private UserDto user;
 	private Long userIdHost;
 	private List<TemplateCardDto> cards;
@@ -37,16 +35,6 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 			this.type = entity.getType();
 			this.visibility = entity.getVisibility();
 			this.description = entity.getDescription();
-			if(entity.getChilds()!=null&&entity.getChilds().size()>0&&check) {
-				childs = new ArrayList<>();
-				for(TemplateWorkSpace workSpace:entity.getChilds()) {
-					this.childs.add(new TemplateWorkSpaceDto(workSpace,false));
-					
-				}
-			}
-			if(entity.getParent()!=null&&entity.getParent().getId()!=null&&check) {
-				this.parent = new TemplateWorkSpaceDto(entity.getParent(),false);
-			}
 			if(entity.getUser()!=null&&entity.getUser().getId()!=null) {
 				this.user = new UserDto(entity.getUser());
 			}
@@ -103,18 +91,7 @@ public class TemplateWorkSpaceDto extends BaseObjectDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<TemplateWorkSpaceDto> getChilds() {
-		return childs;
-	}
-	public void setChilds(List<TemplateWorkSpaceDto> childs) {
-		this.childs = childs;
-	}
-	public TemplateWorkSpaceDto getParent() {
-		return parent;
-	}
-	public void setParent(TemplateWorkSpaceDto parent) {
-		this.parent = parent;
-	}
+
 
 	public List<TemplateCardDto> getCards() {
 		return cards;

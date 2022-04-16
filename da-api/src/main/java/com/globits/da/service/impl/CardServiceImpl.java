@@ -51,7 +51,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 			entity.setWorkSpace(workSpace);
 			entity = cardRepository.save(entity);
 			if(entity!=null) {
-				return new CardDto(entity,true);
+				return new CardDto(entity);
 			}
 		}
 		return null;
@@ -86,7 +86,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
 		String sqlCount = "select count(entity.id) from  Card as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.CardDto(entity,true) from  Card as entity where (1=1)  ";
+		String sql = "select new com.globits.da.dto.CardDto(entity) from  Card as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
@@ -125,7 +125,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		if(id!=null) {			
 			Card entity = cardRepository.getOne(id);
 			if(entity!=null) {
-				return new CardDto(entity,true);
+				return new CardDto(entity);
 			}
 			
 		}
@@ -140,7 +140,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 				card.setViewIndex(viewIndex);
 			}
 			card = cardRepository.save(card);
-			return new CardDto(card,true);
+			return new CardDto(card);
 		}
 		return null;
 	}

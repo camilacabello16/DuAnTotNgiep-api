@@ -21,9 +21,6 @@ public class CardDto extends BaseObjectDto{
 	
 	public CardDto() {}
 	public CardDto(Card entity) {
-		
-	}
-	public CardDto(Card entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
 			this.createDate = entity.getCreateDate();
@@ -33,10 +30,10 @@ public class CardDto extends BaseObjectDto{
 			this.name = entity.getName();
 			this.status = entity.getStatus();
 			this.viewIndex = entity.getViewIndex();
-			if(entity.getTasks()!=null&&entity.getTasks().size()>0&&check) {
+			if(entity.getTasks()!=null&&entity.getTasks().size()>0) {
 				tasks = new ArrayList<>();
 				for(Task task:entity.getTasks()) {
-					this.tasks.add(new TaskDto(task,false));
+					this.tasks.add(new TaskDto(task));
 				}
 			}
 		}

@@ -24,9 +24,6 @@ public class TaskDto extends BaseObjectDto {
 	private UserDto user;
 	public TaskDto() {}
 	public TaskDto(Task entity) {
-		this(entity, true);
-	}
-	public TaskDto(Task entity,boolean check) {
 		if(entity!=null) {
 			this.id = entity.getId();
 			this.createDate = entity.getCreateDate();
@@ -37,13 +34,10 @@ public class TaskDto extends BaseObjectDto {
 			this.startDate = entity.getStartDate();
 			this.endDate = entity.getEndDate();
 			this.viewIndex = entity.getViewIndex();
-			if(entity.getCard()!=null&&entity.getCard().getId()!=null&&check) {
-				this.card = new CardDto(entity.getCard(),false);
-			}
-			if(entity.getComments()!=null&&entity.getComments().size()>0 &&check) {
+			if(entity.getComments()!=null&&entity.getComments().size()>0) {
 				this.comments = new ArrayList<>();
 				for(Comment comment:entity.getComments()) {
-					this.comments.add(new CommentDto(comment,false));
+					this.comments.add(new CommentDto(comment));
 				}
 			}
 			if(entity.getUser()!=null&&entity.getUser().getId()!=null) {
