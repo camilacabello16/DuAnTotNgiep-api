@@ -86,7 +86,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
 		String sqlCount = "select count(entity.id) from  Card as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.CardDto(entity) from  Card as entity where (1=1)  ";
+		String sql = "select new com.globits.da.dto.CardDto(entity,true) from  Card as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";

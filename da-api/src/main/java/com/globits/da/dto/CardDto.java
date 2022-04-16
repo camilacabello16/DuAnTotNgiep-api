@@ -38,7 +38,27 @@ public class CardDto extends BaseObjectDto{
 			}
 		}
 	}
-	
+	public CardDto(Card entity,Boolean check) {
+		if(entity!=null) {
+			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
+			this.name = entity.getName();
+			this.status = entity.getStatus();
+			this.viewIndex = entity.getViewIndex();
+			if(entity.getTasks()!=null&&entity.getTasks().size()>0&&check) {
+				tasks = new ArrayList<>();
+				for(Task task:entity.getTasks()) {
+					this.tasks.add(new TaskDto(task,check));
+				}
+			}
+			if(entity.getWorkSpace()!=null) {
+				this.workSpace = new WorkSpaceDto(entity.getWorkSpace(),false);
+			}
+		}
+	}
 	public Integer getViewIndex() {
 		return viewIndex;
 	}

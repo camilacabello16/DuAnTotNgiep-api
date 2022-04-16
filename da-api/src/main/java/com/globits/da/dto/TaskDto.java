@@ -46,7 +46,31 @@ public class TaskDto extends BaseObjectDto {
 		}
 	}
 	
-	
+	public TaskDto(Task entity,Boolean check) {
+		if(entity!=null) {
+			this.id = entity.getId();
+			this.createDate = entity.getCreateDate();
+			this.createdBy = entity.getCreatedBy();
+			this.modifyDate = entity.getModifyDate();
+			this.modifiedBy = entity.getModifiedBy();
+			this.name = entity.getName();
+			this.startDate = entity.getStartDate();
+			this.endDate = entity.getEndDate();
+			this.viewIndex = entity.getViewIndex();
+			if(entity.getComments()!=null&&entity.getComments().size()>0) {
+				this.comments = new ArrayList<>();
+				for(Comment comment:entity.getComments()) {
+					this.comments.add(new CommentDto(comment));
+				}
+			}
+			if(entity.getUser()!=null&&entity.getUser().getId()!=null&&check) {
+				this.user = new UserDto(entity.getUser());
+			}
+			if(entity.getCard()!=null&&entity.getCard().getId()!=null&&check) {
+				this.card = new CardDto(entity.getCard(),check);
+			}
+		}
+	}
 	public Integer getViewIndex() {
 		return viewIndex;
 	}
