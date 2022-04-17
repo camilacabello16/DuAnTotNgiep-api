@@ -176,7 +176,7 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 				workSpaceChild.setType(templateWorkSpaceDto.getType());
 				workSpaceChild.setDescription(templateWorkSpaceDto.getDescription());
 				workSpaceChild.setVisibility(templateWorkSpaceDto.getVisibility());
-				if (dto != null && dto.getId() != null) {
+				if (dto != null && dto.getParent().getId() != null) {
 					parent = workSpaceRepository.findById(dto.getParent().getId()).orElse(null);
 				}
 				workSpaceChild.setParent(parent);
