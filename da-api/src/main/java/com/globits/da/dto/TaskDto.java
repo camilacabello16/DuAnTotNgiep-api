@@ -67,7 +67,7 @@ public class TaskDto extends BaseObjectDto {
 				this.user = new UserDto(entity.getUser());
 			}
 			if(entity.getCard()!=null&&entity.getCard().getId()!=null&&check) {
-				this.card = new CardDto(entity.getCard(),check);
+				this.card = new CardDto(entity.getCard(),false);
 			}
 		}
 	}

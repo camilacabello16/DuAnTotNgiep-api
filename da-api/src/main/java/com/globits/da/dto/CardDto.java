@@ -51,7 +51,7 @@ public class CardDto extends BaseObjectDto{
 			if(entity.getTasks()!=null&&entity.getTasks().size()>0&&check) {
 				tasks = new ArrayList<>();
 				for(Task task:entity.getTasks()) {
-					this.tasks.add(new TaskDto(task,check));
+					this.tasks.add(new TaskDto(task,false));
 				}
 			}
 			if(entity.getWorkSpace()!=null&&entity.getWorkSpace().getId()!=null&& check) {
