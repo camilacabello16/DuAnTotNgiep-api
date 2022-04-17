@@ -59,7 +59,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 			entity.setUser(user);
 			entity = taskRepository.save(entity);
 			if(entity!=null) {
-				return new TaskDto(entity);
+				return new TaskDto(entity,true);
 			}
 			
 		}
@@ -96,7 +96,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		
 		String sqlCount = "select count(entity.id) from  Task as entity join Card c on entity.card.id = c.id join "
 				+ " WorkSpace w on w.id = c.workSpace.id where (1=1)   ";
-		String sql = "select new com.globits.da.dto.TaskDto(entity) from  Task as entity join Card c on entity.card.id = c.id join"
+		String sql = "select new com.globits.da.dto.TaskDto(entity,true) from  Task as entity join Card c on entity.card.id = c.id join"
 				+ " WorkSpace w on w.id = c.workSpace.id where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
@@ -148,7 +148,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 		if(id!=null) {			
 			Task entity = taskRepository.getOne(id);
 			if(entity!=null) {
-				return new TaskDto(entity);
+				return new TaskDto(entity,true);
 			}
 			
 		}
@@ -163,7 +163,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 				task.setViewIndex(viewIndex);
 			}
 			task = taskRepository.save(task);
-			return new TaskDto(task);
+			return new TaskDto(task,true);
 		}
 		return null;
 	}

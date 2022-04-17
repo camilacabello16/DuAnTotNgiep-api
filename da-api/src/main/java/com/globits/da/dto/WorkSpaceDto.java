@@ -58,7 +58,7 @@ public class WorkSpaceDto extends BaseObjectDto {
 			if(entity.getCards()!=null&&entity.getCards().size()>0) {
 				cards =new ArrayList<CardDto>();
 				for(Card card:entity.getCards()) {
-					this.cards.add(new CardDto(card));
+					this.cards.add(new CardDto(card,false));
 				}
 			}
 		}
