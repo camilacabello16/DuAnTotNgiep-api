@@ -54,7 +54,7 @@ public class CardDto extends BaseObjectDto{
 					this.tasks.add(new TaskDto(task,check));
 				}
 			}
-			if(entity.getWorkSpace()!=null) {
+			if(entity.getWorkSpace()!=null&&entity.getWorkSpace().getId()!=null&& check) {
 				this.workSpace = new WorkSpaceDto(entity.getWorkSpace(),false);
 			}
 		}
