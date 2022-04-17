@@ -48,4 +48,9 @@ public class RestWorkSpaceController {
 		Boolean result = workSpaceService.deleteById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<WorkSpaceDto> getById(@PathVariable("id") UUID id) {
+		WorkSpaceDto result = workSpaceService.getById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
