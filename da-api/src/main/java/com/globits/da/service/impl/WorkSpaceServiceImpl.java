@@ -166,7 +166,6 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 	public WorkSpaceDto cloneTemplateWorkSpace(WorkSpaceDto dto) {
 		if (dto != null) {
 			TemplateWorkSpaceDto templateWorkSpaceDto = null;
-			WorkSpaceDto workSpaceDto = new WorkSpaceDto();
 			if (dto.getIdTemplateWorkSpace() != null) {
 				templateWorkSpaceDto = templateWorkSpaceService.getById(dto.getIdTemplateWorkSpace());
 			}
@@ -177,8 +176,8 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 				workSpaceChild.setType(templateWorkSpaceDto.getType());
 				workSpaceChild.setDescription(templateWorkSpaceDto.getDescription());
 				workSpaceChild.setVisibility(templateWorkSpaceDto.getVisibility());
-				if (workSpaceDto != null && workSpaceDto.getId() != null) {
-					parent = workSpaceRepository.findById(workSpaceDto.getId()).orElse(null);
+				if (dto != null && dto.getId() != null) {
+					parent = workSpaceRepository.findById(dto.getParent().getId()).orElse(null);
 				}
 				workSpaceChild.setParent(parent);
 				List<TemplateCard> templateCards = templateCardRepository
