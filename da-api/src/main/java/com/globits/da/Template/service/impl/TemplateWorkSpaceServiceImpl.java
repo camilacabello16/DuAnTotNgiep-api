@@ -157,7 +157,7 @@ public class TemplateWorkSpaceServiceImpl extends GenericServiceImpl<TemplateWor
 		String orderBy = " ORDER BY entity.createDate DESC";
 
 		String sqlCount = "select count(entity.id) from  TemplateWorkSpace as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.TemplateWorkSpaceDto(entity,true) from  TemplateWorkSpace as entity where (1=1)  ";
+		String sql = "select new com.globits.da.Template.dto.TemplateWorkSpaceDto(entity,true) from  TemplateWorkSpace as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
