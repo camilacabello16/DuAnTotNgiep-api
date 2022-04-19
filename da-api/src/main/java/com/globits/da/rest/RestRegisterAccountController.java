@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.globits.security.dto.UserDto;
 import com.globits.security.service.UserService;
@@ -32,8 +33,8 @@ public class RestRegisterAccountController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	@RequestMapping(value ="/email/{email}",  method = RequestMethod.GET)
-	public ResponseEntity<Boolean> findUserByEmail(@PathVariable(name = "email") String email) {
+	@RequestMapping(value ="/email",  method = RequestMethod.POST)
+	public ResponseEntity<Boolean> findUserByEmail(@RequestParam(name = "email") String email) {
 		Boolean result = false;
 		UserDto userDto = userService.findByEmail(email);
 		if(userDto!=null) {
