@@ -63,7 +63,13 @@ public class ReceiverNotificationServiceImpl extends GenericServiceImpl<Receiver
 
 	@Override
 	public Boolean deleteNotifi(UUID id) {
-		// TODO Auto-generated method stub
+		if(id!=null) {
+			ReceiverNotification receiverNotification = receiverNotificationRepository.findById(id).orElse(null);
+			if(receiverNotification!=null) {
+				receiverNotificationRepository.deleteById(id);
+				return true;
+			}
+		}
 		return null;
 	}
 
