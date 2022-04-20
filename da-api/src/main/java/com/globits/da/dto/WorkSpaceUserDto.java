@@ -29,7 +29,7 @@ public class WorkSpaceUserDto extends BaseObjectDto {
 			this.createdBy = entity.getCreatedBy();
 			this.modifyDate = entity.getModifyDate();
 			this.modifiedBy = entity.getModifiedBy();
-			if(entity.getUser()!=null&&entity.getUser().getId()!=null&&check) {
+			if(entity.getUser()!=null&&entity.getUser().getId()!=null) {
 				this.user = new UserDto(entity.getUser());
 			}
 			if(entity.getWorkSpace()!=null&&entity.getWorkSpace().getId()!=null&&check) {
