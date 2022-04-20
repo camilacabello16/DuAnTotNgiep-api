@@ -24,7 +24,10 @@ public class Notification extends BaseObject {
 	
 	@Column(name = "content")
 	private String content;
-
+	
+	@Column(name = "workspace_id") // workspace mời
+	private String workspaceId;
+	
 	public Integer getType() {
 		return type;
 	}
@@ -38,6 +41,16 @@ public class Notification extends BaseObject {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	
+	public String getWorkspaceId() {
+		return workspaceId;
+	}
+	public void setWorkspaceId(String workspaceId) {
+		this.workspaceId = workspaceId;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 	
 }
