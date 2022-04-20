@@ -8,6 +8,7 @@ import com.globits.da.domain.Notification;
 public class NotificationDto extends BaseObjectDto {
 	private Integer type;
 	private String content;
+	private String workspaceId;
 	private LocalDateTime creatDate;
 	public Integer getType() {
 		return type;
@@ -28,6 +29,13 @@ public class NotificationDto extends BaseObjectDto {
 	public void setCreatDate(LocalDateTime creatDate) {
 		this.creatDate = creatDate;
 	}
+	
+	public String getWorkspaceId() {
+		return workspaceId;
+	}
+	public void setWorkspaceId(String workspaceId) {
+		this.workspaceId = workspaceId;
+	}
 	public NotificationDto() {}
 	
 	public NotificationDto(Notification entity) {
@@ -37,6 +45,7 @@ public class NotificationDto extends BaseObjectDto {
 		this.modifyDate = entity.getModifyDate();
 		this.modifiedBy = entity.getModifiedBy();
 		this.type = entity.getType();
+		this.workspaceId = entity.getWorkspaceId();
 		this.content = entity.getContent();
 	}
 }
