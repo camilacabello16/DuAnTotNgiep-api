@@ -201,7 +201,7 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 				ReceiverNotification receiverNotification = new ReceiverNotification();
 				Notification notification = new Notification();
 				notification.setType(1);
-				notification.setWorkspaceId(workSpaceId.toString());
+				notification.setWorkspaceId(entity.getId().toString());
 				notification.setContent(WorkSpaceConstants.CONTENT_INVITE + workSpace.getName());
 				notification = notificationRepository.save(notification);
 				if(notification!=null) {
