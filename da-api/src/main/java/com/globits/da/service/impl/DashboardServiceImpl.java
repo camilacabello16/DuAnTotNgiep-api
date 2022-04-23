@@ -41,46 +41,40 @@ public class DashboardServiceImpl implements DashboardService {
 	private WorkSpaceUserRepository workSpaceUserRepository;
 	@Autowired
 	private WorkSpaceService workSpaceService;
+
 	@Override
-	public Map<String, Map<String, Long>> dashBoardChildWS(UUID parentId) {
-		if (parentId != null) {
-			Map<String, Map<String, Long>> result = new HashedMap<>();
-			List<WorkSpace> workSpaces = workSpaceRepository.getAllByParentId(parentId);
-			if (workSpaces != null && workSpaces.size() > 0) {
-				for (WorkSpace workSpace2 : workSpaces) {
-					if (workSpace2 != null) {
-						Map<String, Long> workSpace = new HashedMap<String, Long>();
-						List<Card> cards = cardRepository.getAllByWorkSpaceId(workSpace2.getId());
-						for (Card card : cards) {
-							if (card != null && card.getId() != null) {
-								workSpace.put(card.getName(), taskRepository.totalTaskByCard(card.getId()));
-							}
-						}
-						result.put(workSpace2.getName(), workSpace);
-					}
+	public Map<String, Long> dashBoardChildWS(UUID childWorkSpaceId) {
+		if (childWorkSpaceId != null) {
+			Map<String, Long> result = new HashedMap<>();
+			List<Card> cards = cardRepository.getAllByWorkSpaceId(childWorkSpaceId);
+			for (Card card : cards) {
+				if (card != null && card.getId() != null) {
+					result.put(card.getName(), taskRepository.totalTaskByCard(card.getId()));
 				}
 			}
-			return result;
+			if (result != null) {
+				return result;
+			}
 		}
 		return null;
 	}
 
 	@Override
 	public Map<String, Long> dashBoardTaskOfMember(UUID childId) {
-		if(childId!=null) {
-			Map<String, Long> result = new  HashedMap<String, Long>()
-;			List<String> roles = new ArrayList<String>();
+		if (childId != null) {
+			Map<String, Long> result = new HashedMap<String, Long>();
+			List<String> roles = new ArrayList<String>();
 			roles.add(WorkSpaceConstants.ROLE_WORKSPACE_MANAGER);
 			roles.add(WorkSpaceConstants.ROLE_WORKSPACE_USER);
 			WorkSpaceDto workSpaceDto = workSpaceService.getById(childId);
-			if(workSpaceDto!=null) {
-				if(workSpaceDto.getUsers()!=null&&workSpaceDto.getUsers().size()>0) {
-					for(UserDto userDto:workSpaceDto.getUsers()) {
+			if (workSpaceDto != null) {
+				if (workSpaceDto.getUsers() != null && workSpaceDto.getUsers().size() > 0) {
+					for (UserDto userDto : workSpaceDto.getUsers()) {
 						result.put(userDto.getUsername(), taskRepository.totalTaskByUserId(userDto.getId()));
 					}
 				}
 			}
-			if(result!=null) {
+			if (result != null) {
 				return result;
 			}
 		}
