@@ -8,6 +8,7 @@ import com.globits.core.dto.BaseObjectDto;
 import com.globits.da.domain.Card;
 import com.globits.da.domain.WorkSpace;
 import com.globits.da.domain.WorkSpaceUser;
+import com.globits.security.dto.UserDto;
 
 public class WorkSpaceDto extends BaseObjectDto {
 
@@ -25,6 +26,7 @@ public class WorkSpaceDto extends BaseObjectDto {
 	private Long userIdHost;
 	private UUID idTemplateWorkSpace;
 	private List<CardDto>cards ;
+	private List<UserDto> users;
 	public WorkSpaceDto() {}
 	public WorkSpaceDto(WorkSpace entity) {
 		this(entity, true);
@@ -129,6 +131,12 @@ public class WorkSpaceDto extends BaseObjectDto {
 	}
 	public void setCards(List<CardDto> cards) {
 		this.cards = cards;
+	}
+	public List<UserDto> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserDto> users) {
+		this.users = users;
 	}
 	
 	

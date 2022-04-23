@@ -31,6 +31,7 @@ import com.globits.da.domain.Task;
 import com.globits.da.domain.WorkSpace;
 import com.globits.da.domain.WorkSpaceUser;
 import com.globits.da.dto.WorkSpaceDto;
+import com.globits.da.dto.WorkSpaceUserDto;
 import com.globits.da.dto.search.SearchDto;
 import com.globits.da.repository.CardRepository;
 import com.globits.da.repository.WorkSpaceRepository;
@@ -154,9 +155,17 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 	public WorkSpaceDto getById(UUID id) {
 		if (id != null) {
 			WorkSpace entity = workSpaceRepository.getOne(id);
-			if (entity != null) {
-				return new WorkSpaceDto(entity, true);
+			List<UserDto> userDtos = new ArrayList<UserDto>();
+			List<WorkSpaceUserDto> workSpaceUserDtos = workSpaceUserRepository.getWorkSpaceUserByRole(WorkSpaceConstants.ROLE_WORKSPACE_USER);
+			WorkSpaceDto result = new WorkSpaceDto(entity,true);
+			for(WorkSpaceUserDto workSpaceUserDto:workSpaceUserDtos) {
+				userDtos.add(workSpaceUserDto.getUser());
 			}
+			result.setUsers(userDtos);
+			if(result!=null) {
+				return result;
+			}
+			
 
 		}
 		return null;
