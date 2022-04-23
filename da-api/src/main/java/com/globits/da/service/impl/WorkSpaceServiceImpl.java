@@ -156,7 +156,10 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 		if (id != null) {
 			WorkSpace entity = workSpaceRepository.getOne(id);
 			List<UserDto> userDtos = new ArrayList<UserDto>();
-			List<WorkSpaceUserDto> workSpaceUserDtos = workSpaceUserRepository.getWorkSpaceUserByRole(WorkSpaceConstants.ROLE_WORKSPACE_USER);
+			List<String> roles = new ArrayList<String>();
+			roles.add(WorkSpaceConstants.ROLE_WORKSPACE_MANAGER);
+			roles.add(WorkSpaceConstants.ROLE_WORKSPACE_USER);
+			List<WorkSpaceUserDto> workSpaceUserDtos = workSpaceUserRepository.getWorkSpaceUserByRole(roles);
 			WorkSpaceDto result = new WorkSpaceDto(entity,true);
 			for(WorkSpaceUserDto workSpaceUserDto:workSpaceUserDtos) {
 				userDtos.add(workSpaceUserDto.getUser());

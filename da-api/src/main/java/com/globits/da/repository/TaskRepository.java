@@ -12,4 +12,7 @@ public interface TaskRepository extends JpaRepository<Task,UUID> {
 	
 	@Query("select count(entity.id) FROM Task entity WHERE entity.card.id =?1")
 	Long totalTaskByCard(UUID cardId);
+	
+	@Query("select count(entity.id) FROM Task entity WHERE entity.user.id =?1")
+	Long totalTaskByUserId(Long userId);
 }

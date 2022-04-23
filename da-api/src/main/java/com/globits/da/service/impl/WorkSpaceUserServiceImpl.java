@@ -1,5 +1,6 @@
 package com.globits.da.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -251,7 +252,8 @@ public class WorkSpaceUserServiceImpl extends GenericServiceImpl<WorkSpaceUser, 
 	@Override
 	public List<WorkSpaceUserDto> getWorkSpaceByRole(String role) {
 		if(role!=null) {
-			List<WorkSpaceUserDto> result = workSpaceUserRepository.getWorkSpaceUserByRole(role);
+			List<String> roles =new  ArrayList<String>();
+			List<WorkSpaceUserDto> result = workSpaceUserRepository.getWorkSpaceUserByRole(roles);
 			if(result!=null) {
 				return result;
 			}

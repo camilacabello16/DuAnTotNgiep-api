@@ -22,9 +22,16 @@ public class RestDashboardController {
 	@Autowired
 	DashboardService dashboardService;
 	
-	@RequestMapping(value = "/{workSpaceId}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Map<String, Long>>> save(@PathVariable(name = "workSpaceId") UUID workSpaceId) {
+	@RequestMapping(value = "/task/{workSpaceId}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Map<String, Long>>> reportTaskByWorkspaceId(@PathVariable(name = "workSpaceId") UUID workSpaceId) {
 		Map<String, Map<String, Long>> result = dashboardService.dashBoardChildWS(workSpaceId);
+		System.out.print(result);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/member/{workSpaceId}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Long>> reportMemberByWorkspaceId(@PathVariable(name = "workSpaceId") UUID workSpaceId) {
+		Map<String,Long> result = dashboardService.dashBoardTaskOfMember(workSpaceId);
 		System.out.print(result);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
