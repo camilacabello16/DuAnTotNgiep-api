@@ -15,7 +15,7 @@ public class SearchDto {
 	private UUID workSpaceId;
 	private Date fromDate;
 	private Date toDate;
-
+	private Long userId;
 	
 	public UUID getCardId() {
 		return cardId;
@@ -82,6 +82,12 @@ public class SearchDto {
 	}
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 	

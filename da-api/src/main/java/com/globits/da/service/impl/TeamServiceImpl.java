@@ -118,13 +118,15 @@ public class TeamServiceImpl extends GenericServiceImpl<Team, UUID> implements T
 		
 		String orderBy = " ORDER BY entity.createDate DESC";
 		
-		String sqlCount = "select count(entity.id) from  Team as entity where (1=1)   ";
-		String sql = "select new com.globits.da.dto.TeamDto(entity,true) from  Team as entity where (1=1)  ";
+		String sqlCount = "select count(distinct entity.id) from  Team as entity join TeamUser tu on tu.team.id = entity.id where (1=1)   ";
+		String sql = "select distinct new com.globits.da.dto.TeamDto(entity,true) from  Team as entity join TeamUser tu on tu.team.id = entity.id where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
 		}
-	
+		if(dto.getUserId()!=null) {
+			whereClause+= "AND tu.user.id = :userId";
+		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
 
@@ -135,9 +137,9 @@ public class TeamServiceImpl extends GenericServiceImpl<Team, UUID> implements T
 			q.setParameter("text", '%' + dto.getKeyword() + '%');
 			qCount.setParameter("text", '%' + dto.getKeyword() + '%');
 		}
-		if (dto.getWorkSpaceId() != null) {
-			q.setParameter("id", dto.getWorkSpaceId() );
-			qCount.setParameter("id", dto.getWorkSpaceId());
+		if (dto.getUserId() != null) {
+			q.setParameter("userId", dto.getUserId() );
+			qCount.setParameter("userId", dto.getUserId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);
