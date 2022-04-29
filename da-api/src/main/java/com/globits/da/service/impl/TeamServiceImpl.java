@@ -22,6 +22,7 @@ import com.globits.da.domain.TeamUser;
 import com.globits.da.domain.WorkSpace;
 import com.globits.da.dto.TeamDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.TeamSearchDto;
 import com.globits.da.repository.TeamRepository;
 import com.globits.da.repository.TeamUserRepository;
 import com.globits.da.service.TeamService;
@@ -100,7 +101,7 @@ public class TeamServiceImpl extends GenericServiceImpl<Team, UUID> implements T
 	}
 
 	@Override
-	public Page<TeamDto> searchByPage(SearchDto dto) {
+	public Page<TeamDto> searchByPage(TeamSearchDto dto) {
 		if (dto == null) {
 			return null;
 		}
@@ -125,7 +126,10 @@ public class TeamServiceImpl extends GenericServiceImpl<Team, UUID> implements T
 			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
 		}
 		if(dto.getUserId()!=null) {
-			whereClause+= "AND tu.user.id = :userId";
+			whereClause+= " AND tu.user.id = :userId ";
+		}
+		if(dto.getHostId()!=null) {
+			whereClause+= " AND entity.hostId = :hostId ";
 		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
@@ -140,6 +144,10 @@ public class TeamServiceImpl extends GenericServiceImpl<Team, UUID> implements T
 		if (dto.getUserId() != null) {
 			q.setParameter("userId", dto.getUserId() );
 			qCount.setParameter("userId", dto.getUserId());
+		}
+		if (dto.getHostId() != null) {
+			q.setParameter("hostId", dto.getHostId() );
+			qCount.setParameter("hostId", dto.getHostId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);

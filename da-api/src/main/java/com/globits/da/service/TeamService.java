@@ -8,11 +8,12 @@ import com.globits.core.service.GenericService;
 import com.globits.da.domain.Team;
 import com.globits.da.dto.TeamDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.TeamSearchDto;
 
 public interface TeamService  extends GenericService<Team, UUID>{
 		
 	public TeamDto saveOrUpdate(UUID id,TeamDto dto);
 	public Boolean deleteById(UUID id);
-	Page<TeamDto> searchByPage(SearchDto dto);
+	Page<TeamDto> searchByPage(TeamSearchDto dto);
 	TeamDto getById(UUID id);
 }
