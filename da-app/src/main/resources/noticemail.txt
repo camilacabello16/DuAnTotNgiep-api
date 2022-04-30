@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông báo từ Joinco</title>
+</head>
+
+<body>
+    <div>
+        <div>
+            <p><span style="color: #f02;">MANAGER_NAME</span> mời bạn vào workspace <span
+                    style="color: #f02;">WORKSPACE_NAME</span></p>
+        </div>
+        <div>
+            <button
+                style="background-color: #2ECC71; padding: 10px; border: none; border-radius: 4px; cursor: pointer; color: #fff;" onclick="acceptRequest()">Đồng
+                ý</button>
+            <button
+                style="background-color: #E74C3C; padding: 10px; border: none; border-radius: 4px; cursor: pointer;color: #fff;" onclick="cancelRequest()">Từ
+                chối</button>
+        </div>
+        <input id="workspaceId" value="{WORKSPACE_ID}" style="display: none;"/>
+        <input id="notificationId" value="{RECEIVE_NOTIFICATION_ID}" style="display: none;"/>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function acceptRequest(){
+            var workspaceId = document.getElementById("workspaceId").value;
+            axios.put("http://localhost:8085/workflow/api/workspace-user/invite/" + workspaceId + '/' + true);
+        }
+        function cancelRequest(){
+            var receiveNotification = document.getElementById('notificationId').value;
+            axios.delete("http://localhost:8085/workflow/api/receiver-notification" + '/' + receiveNotification);
+        }
+    </script>
+</body>
+
+</html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.globits.da.dto.TeamDto;
 import com.globits.da.dto.search.SearchDto;
+import com.globits.da.dto.search.TeamSearchDto;
 import com.globits.da.service.TeamService;
 @RestController
 @RequestMapping("/api/team")
@@ -34,7 +35,7 @@ public class RestTeamController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ResponseEntity<Page<TeamDto>> search(@RequestBody SearchDto dto) {
+	public ResponseEntity<Page<TeamDto>> search(@RequestBody TeamSearchDto dto) {
 		Page<TeamDto> result = teamService.searchByPage(dto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
