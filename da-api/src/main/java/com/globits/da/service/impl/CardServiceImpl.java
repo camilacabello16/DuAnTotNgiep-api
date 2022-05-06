@@ -89,7 +89,7 @@ public class CardServiceImpl extends GenericServiceImpl<Card, UUID> implements C
 		String sql = "select new com.globits.da.dto.CardDto(entity,true) from  Card as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
-			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
+			whereClause += " AND ( entity.name LIKE :text ) ";
 		}
 		if(dto.getWorkSpaceId()!=null) {
 			whereClause += " AND ( entity.workSpace.id =:id)";

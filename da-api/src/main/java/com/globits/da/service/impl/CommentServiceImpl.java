@@ -104,7 +104,7 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, UUID> implem
 		String sql = "select new com.globits.da.dto.CommentDto(entity) from  Comment as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
-			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
+			whereClause += " AND ( entity.name LIKE :text)";
 		}
 
 		
