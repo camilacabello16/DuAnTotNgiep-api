@@ -128,7 +128,7 @@ public class WorkSpaceServiceImpl extends GenericServiceImpl<WorkSpace, UUID> im
 		String sql = "select new com.globits.da.dto.WorkSpaceDto(entity,true) from  WorkSpace as entity where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
-			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
+			whereClause += " AND ( entity.name LIKE :text )";
 		}
 
 		sql += whereClause + orderBy;

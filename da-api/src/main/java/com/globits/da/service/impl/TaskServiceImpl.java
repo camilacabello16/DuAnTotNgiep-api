@@ -100,7 +100,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, UUID> implements T
 				+ " WorkSpace w on w.id = c.workSpace.id where (1=1)  ";
 
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
-			whereClause += " AND ( entity.name LIKE :text OR entity.code LIKE :text )";
+			whereClause += " AND ( entity.name LIKE :text )";
 		}
 		if(dto.getCardId()!=null) {
 			whereClause += " AND ( c.id =:cardId)";
