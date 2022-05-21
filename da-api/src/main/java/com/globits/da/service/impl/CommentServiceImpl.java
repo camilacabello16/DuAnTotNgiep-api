@@ -106,8 +106,12 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, UUID> implem
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			whereClause += " AND ( entity.name LIKE :text)";
 		}
-
-		
+		if(dto.getTaskId()!=null) {
+			whereClause += " AND ( entity.task.id =:taskId)";
+		}
+		if(dto.getUserId()!=null) {
+			whereClause += " AND ( entity.user.id =:user)";
+		}
 		sql += whereClause + orderBy;
 		sqlCount += whereClause;
 
@@ -117,6 +121,14 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, UUID> implem
 		if (dto.getKeyword() != null && StringUtils.hasText(dto.getKeyword())) {
 			q.setParameter("text", '%' + dto.getKeyword() + '%');
 			qCount.setParameter("text", '%' + dto.getKeyword() + '%');
+		}
+		if (dto.getTaskId() != null ) {
+			q.setParameter("taskId", dto.getTaskId());
+			qCount.setParameter("taskId", dto.getTaskId());
+		}
+		if (dto.getUserId() != null ) {
+			q.setParameter("user", dto.getUserId());
+			qCount.setParameter("user", dto.getUserId());
 		}
 		int startPosition = pageIndex * pageSize;
 		q.setFirstResult(startPosition);

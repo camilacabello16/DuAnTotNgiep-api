@@ -16,7 +16,7 @@ public class SearchDto {
 	private Date fromDate;
 	private Date toDate;
 	private Long userId;
-	
+	private UUID taskId;
 	public UUID getCardId() {
 		return cardId;
 	}
@@ -88,6 +88,12 @@ public class SearchDto {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public UUID getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(UUID taskId) {
+		this.taskId = taskId;
 	}
 	
 	
